@@ -15,12 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('slug')->unique();
-            $table->text('content');
-            $table->text('excerpt')->nullable();
-            $table->string('featured_image')->nullable();
-            $table->boolean('published')->default(false);
-            $table->timestamp('published_at')->nullable();
-            $table->foreignId('user_id')->constrained();
+            $table->string('image');
+            $table->text('excerpt');
+            $table->longText('content');
             $table->timestamps();
         });
     }
@@ -32,4 +29,6 @@ return new class extends Migration
     {
         Schema::dropIfExists('posts');
     }
+
 };
+ 
