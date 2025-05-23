@@ -3,34 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Blog</title>
+    <title>Baka Blogs</title>
 
     {{-- Include Tailwind CSS via CDN (or swap with your own CSS) --}}
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
 
     {{-- CSRF Token for security --}}
     <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
-<body class="bg-gray-100 text-gray-900">
+<body class="bg-gray-100 min-h-screen">
 
-    <header class="bg-white shadow p-4 mb-6">
-        <div class="container mx-auto flex justify-between items-center">
-            <h1 class="text-2xl font-bold">
-                <a href="{{ route('home') }}">My Blog</a>
+    <header class="bg-gradient-to-r from-orange-600 to-orange-300 shadow p-4 mb-6 text-white">
+        <div class="container mx-auto flex justify-between items-center ">
+            <h1 class="text-5xl font-bold mb-8 mt-4">
+                <a href="{{ route('home') }}">Baka Blogs</a>
             </h1>
             <nav>
-                <a href="{{ route('posts.create') }}" class="text-blue-600 hover:underline">Create Post</a>
+                <a href="{{ route('posts.create') }}" class=" hover:underline">Create Post</a>
             </nav>
         </div>
     </header>
 
-    <main class="container mx-auto px-4">
+    <main class="container mx-auto px-">
         @yield('content')
     </main>
 
-    <footer class="mt-10 text-center text-sm text-gray-500">
-        &copy; {{ date('Y') }} My Blog. All rights reserved.
-    </footer>
+    
+
 
 </body>
 </html>
