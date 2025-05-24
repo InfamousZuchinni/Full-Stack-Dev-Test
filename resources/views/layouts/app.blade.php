@@ -9,24 +9,20 @@
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
-<body class="bg-gray-100 min-h-screen">
+<body class="bg-gray-100 ">
 
-    <header class="bg-gradient-to-r from-orange-600 to-orange-300 shadow p-4 mb-6 text-white">
-        <div class="container mx-auto flex justify-between items-center ">
-            <h1 class="text-5xl font-bold mb-8 mt-4">
+    <header class="bg-gradient-to-r from-orange-600 to-orange-300 shadow p-4 mb-6 text-white w-full">
+        <div class="w-full flex px-8 justify-between  items-center ">
+            <h1 class="text-5xl font-bold mb-4 mt-4 ml-4 flex-grow">
                 <a href="{{ route('home') }}">Baka Blogs</a>
+                <p class="text-xl ">Your daily dose of anime news, reviews, and discussions</p>
             </h1>
-            <nav>
-                <a href="{{ route('posts.create') }}" class=" hover:underline">Create Post</a>
-            </nav>
         </div>
     </header>
 
-    <main class="container mx-auto px-">
+    <main class="">
         @yield('content')
     </main>
-
-    
 
 
 </body>

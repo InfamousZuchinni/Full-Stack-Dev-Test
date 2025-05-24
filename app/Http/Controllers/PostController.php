@@ -26,18 +26,18 @@ class PostController extends Controller
 
     public function create()
     {
-        return view('admin.posts.create');
+        return view('posts.create');
     }
     public function store(Request $request)
     {
 
-        $validated = $request->validate([
-            'title' => 'required',
-            'slug'=> 'required|unique:posts,slug',
+            $validated = $request->validate([            
+            'title' => 'required|max:255',
+            'slug' => 'required|unique:posts,slug',
             'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:10000',
             'excerpt' => 'required',
             'content' => 'required', 
-            'date' => 'required'                     
+            'date' => 'required'                      
         ]); 
 
         if ($request->hasFile('image')) {
@@ -52,13 +52,43 @@ class PostController extends Controller
 
     public function destroy(Post $post)
     {
-        if ($post->image) {
-            Storage::disk('public')->delete($post->image);
-        }
-
     $post->delete();
-
-    return redirect()->route('posts.index')->with('success','Post Deleted.');
     
+    return redirect()->route('home')->with('success', 'Post deleted successfully!');
     }
+
+    public function edit(Post $post)
+    {
+        return view('posts.edit', compact('post'));
+    }
+
+    public function update(Request $request, Post $post)
+{
+    $request->validate([
+        'title' => 'required|string|max:255',
+        'excerpt' => 'required|string',
+        'content' => 'required|string',
+        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+    ]);
+
+    $data = [
+        'title' => $request->title,
+        'excerpt' => $request->excerpt,
+        'content' => $request->content,
+        'slug' => Str::slug($request->title), 
+    ];
+
+    if ($request->hasFile('image')) {
+        if ($post->image) {
+            Storage::delete('public/' . $post->image);
+        }
+        
+        $data['image'] = $request->file('image')->store('posts', 'public');
+    }
+
+    $post->update($data);
+
+    return redirect()->route('home')->with('success', 'Post updated successfully!');
+    }
+
 }
