@@ -28,7 +28,7 @@
             
             <div class="grid grid-cols-4 gap-4 mb-10 items-center">
                 <label class="font-medium">Featured Image</label>
-                <label for="image" class="col-span-3 inline-block bg-orange-700 text-white px-5 py-2 cursor-pointer hover:bg-orange-400 w-fit">
+                <label for="image" class="col-span-3 inline-block bg-orange-600 text-white px-5 py-2 cursor-pointer hover:bg-orange-700 transition w-fit">
                     Select an Image
                 </label>
                 <input type="file" name="image" id="image" accept="image/*" class="hidden">
@@ -56,10 +56,10 @@
             <div class="grid grid-cols-4 gap-4">
                 <div></div>
                 <div class="col-span-3">
-                    <button type="submit" class="bg-orange-700 text-white px-9 py-2 mr-2 hover:bg-orange-400">
+                    <button type="submit" class="bg-orange-600 text-white px-9 py-2 mr-2 hover:bg-orange-700 transition">
                         Save
                     </button>
-                    <button type="reset" class="bg-gray-400 text-black px-9 py-2 hover:bg-gray-200">
+                    <button type="reset" class="bg-gray-300 text-black px-9 py-2 hover:bg-gray-400 transition">
                         Cancel
                     </button>
                 </div>

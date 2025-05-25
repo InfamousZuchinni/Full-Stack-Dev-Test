@@ -1,23 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    @vite(['resources/css/app.css'])
-    <title>Baka Blogs</title>
-</head>
+@extends('layouts.app')
 
-<body>
-    <header class="bg-gradient-to-r from-orange-600 to-orange-300 shadow p-4 mb-6 text-white w-full">
-        <div class="w-full flex px-8 justify-between  items-center ">
-            <h1 class="text-5xl font-bold mb-4 mt-4 ml-4 flex-grow">
-                    <a href="{{ route('home') }}">Baka Blogs</a>
-                    <p class="text-xl ">Your daily dose of anime news, reviews, and discussions</p>
-            </h1>
-        </div>
-    </header>
-
-    <main>
+@section('content')
 
          @if(session('success'))
             <div class="max-w-6xl mx-auto px-6 mb-6">
@@ -28,20 +11,22 @@
         @endif
 
         <section>
-            <div class="text">
-                <a href="{{ route('posts.create') }}" class="inline-block ml-15 mt-5 px-7 py-4 bg-orange-600 text-white  hover:bg-orange-700 ">
+            <div class="max-w-6xl ml-9 px-6">
+                <div class="text-left mb-6">
+                    <a href="{{ route('posts.create') }}" class="inline-block mt-5 px-7 py-4 bg-orange-600 text-white hover:bg-orange-700 transition">
                     + Add New
-                </a>
+                    </a>
+                </div>
             </div>
             <div class="grid grid-cols-1 gap-6 ml-10 mr-10 mt-10 mx-auto px-5">
                 @foreach ($posts as $post)
-                    <div class="flex bg-white shadow-lg mb-9  overflow-hidden">
+                    <div class="flex bg-white shadow-lg mb-9 text-gray-500 overflow-hidden">
 
-                        <img src="{{ asset('storage/' . $post->image) }}" alt="{{ $post->title }}" class="w-1/3 object-cover">
-                        
+                    <img src="{{ asset($post->image) }}" alt="{{ $post->title }}" class="w-1/3 object-cover">   
+                                        
                         <div class="p-6 w-2/3 relative">
                             <div class="absolute top-4 right-4 flex gap-2">
-                                <a href="{{ route('posts.edit', $post) }}" class="text-gray-500 hover:text-orange-600">
+                                <a href="{{ route('posts.edit', $post) }}" class="text-gray-500  hover:text-orange-600">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
                                     </svg>
@@ -57,11 +42,11 @@
                                 </form>
                             </div>
                             
-                            <h2 class="text-2xl font-bold text-gray-800 mb-3 pr-16">{{ $post->title }}</h2>
+                            <h2 class="text-4xl font-bold text-gray-500 mb-3 pr-16">{{ $post->title }}</h2>
                             
-                            <p class="text-gray-600 mb-4 leading-relaxed">{{ $post->excerpt }}</p>
+                            <p class="text-gray-500 mb-4 leading-relaxed text-2xl">{{ $post->excerpt }}</p>
                             
-                            <a href="{{ route('posts.show', $post->slug) }}" class="inline-block mt-7 px-8 py-4 bg-orange-600 text-white rounded hover:bg-orange-700 transition-colors">
+                            <a href="{{ route('posts.show', $post->slug) }}" class="inline-block mt-7 px-8 py-4 bg-orange-600 text-white hover:bg-orange-700 transition-colors">
                                 Read More →
                             </a>
                         </div>
@@ -69,9 +54,5 @@
                 @endforeach
             </div>
         </section>
-    </main>
-
-</body>
-
-</html>
+@endsection
 

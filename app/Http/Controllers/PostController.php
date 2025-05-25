@@ -30,31 +30,39 @@ class PostController extends Controller
     }
     public function store(Request $request)
     {
-
-            $validated = $request->validate([            
+        $validated = $request->validate([            
             'title' => 'required|max:255',
             'slug' => 'required|unique:posts,slug',
             'image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:10000',
             'excerpt' => 'required',
-            'content' => 'required', 
+            'content' => 'required',
             'date' => 'required'                      
-        ]); 
-
+        ]);
+        
         if ($request->hasFile('image')) {
-        $validated['image'] = $request->file('image')->store('uploads', 'public');
+            if (!file_exists(public_path('sample-images'))) {
+                mkdir(public_path('sample-images'), 0755, true);
+            }
+            
+            $image = $request->file('image');
+            $fileName = time() . '_' . $image->getClientOriginalName();
+            
+            $image->move(public_path('sample-images'), $fileName);
+            $validated['image'] = 'sample-images/' . $fileName;
         }
-
-    Post::create($validated);
-
-    return redirect()->route('posts.create')->with('success', 'Post created successfully!');
-    
+        
+        Post::create($validated);
+        return redirect()->route('posts.create')->with('success', 'Post created successfully!');
     }
 
-    public function destroy(Post $post)
+     public function destroy(Post $post)
     {
-    $post->delete();
-    
-    return redirect()->route('home')->with('success', 'Post deleted successfully!');
+        if ($post->image && file_exists(public_path($post->image))) {
+            unlink(public_path($post->image));
+        }
+        
+        $post->delete();
+        return redirect()->route('home')->with('success', 'Post deleted successfully!');
     }
 
     public function edit(Post $post)
@@ -63,32 +71,41 @@ class PostController extends Controller
     }
 
     public function update(Request $request, Post $post)
-{
-    $request->validate([
-        'title' => 'required|string|max:255',
-        'excerpt' => 'required|string',
-        'content' => 'required|string',
-        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-    ]);
-
-    $data = [
-        'title' => $request->title,
-        'excerpt' => $request->excerpt,
-        'content' => $request->content,
-        'slug' => Str::slug($request->title), 
-    ];
-
-    if ($request->hasFile('image')) {
-        if ($post->image) {
-            Storage::delete('public/' . $post->image);
+    {
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'excerpt' => 'required|string',
+            'content' => 'required|string',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+        
+        $data = [
+            'title' => $request->title,
+            'excerpt' => $request->excerpt,
+            'content' => $request->content,
+            'slug' => Str::slug($request->title),
+        ];
+        
+        if ($request->hasFile('image')) {
+            if ($post->image && file_exists(public_path($post->image))) {
+                unlink(public_path($post->image));
+            }
+            
+            if (!file_exists(public_path('sample-images'))) {
+                mkdir(public_path('sample-images'), 0755, true);
+            }
+            
+            $image = $request->file('image');
+            $fileName = time() . '_' . $image->getClientOriginalName();
+            
+            $image->move(public_path('sample-images'), $fileName);
+            $data['image'] = 'sample-images/' . $fileName;
         }
         
-        $data['image'] = $request->file('image')->store('posts', 'public');
+        $post->update($data);
+        return redirect()->route('home')->with('success', 'Post updated successfully!');
     }
 
-    $post->update($data);
 
-    return redirect()->route('home')->with('success', 'Post updated successfully!');
-    }
-
+    
 }

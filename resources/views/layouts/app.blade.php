@@ -15,7 +15,7 @@
         <div class="w-full flex px-8 justify-between  items-center ">
             <h1 class="text-5xl font-bold mb-4 mt-4 ml-4 flex-grow">
                 <a href="{{ route('home') }}">Baka Blogs</a>
-                <p class="text-xl ">Your daily dose of anime news, reviews, and discussions</p>
+                <p class="text-xl ">Your daily dose of Anime news and reviews</p>
             </h1>
         </div>
     </header>
