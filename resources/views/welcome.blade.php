@@ -13,7 +13,7 @@
         <section>
             <div class="max-w-6xl ml-9 px-6">
                 <div class="text-left mb-6">
-                    <a href="{{ route('posts.create') }}" class="inline-block mt-5 px-7 py-4 bg-orange-600 text-white hover:bg-orange-700 transition">
+                    <a href="{{ route('posts.create') }}" class="font-bold inline-block mt-5 px-7 py-4 bg-orange-600 text-white hover:bg-orange-700 transition">
                     + Add New
                     </a>
                 </div>
@@ -26,27 +26,44 @@
 
                         <div class="p-6 w-2/3 relative">
                             <div class="absolute top-4 right-4 flex gap-2">
+
                                 <a href="{{ route('posts.edit', $post) }}" class="text-gray-500  hover:text-orange-600">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
                                     </svg>
                                 </a>
-                                <form action="{{ route('posts.destroy', $post) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this post?');" class="inline">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="text-gray-500 hover:text-red-600">
+
+                                <div x-data="{ showModal: false }" class="inline">
+
+                                    <button type="button" @click="showModal = true" class="text-gray-500 hover:text-red-600">
                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
                                         </svg>
                                     </button>
-                                </form>
+
+                                    <div x-show="showModal" x-cloak class="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-40">
+                                        <div class="bg-white px-8 py-10 shadow-lg w-full max-w-md">
+                                            <h2 class="text-2xl font-bold mb-4 text-center">Are you sure you want to delete the article?</h2>
+                                            <div class="flex justify-center space-x-4">
+                                                <form method="POST" action="{{ route('posts.destroy', $post) }}">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="px-12 py-4 bg-orange-600 text-white hover:bg-orange-700 ">Yes</button>
+                                                </form>
+                                                <button @click="showModal = false" class="px-12 py-4 bg-gray-300 text-gray-700 hover:bg-gray-400 ">No</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
                             </div>
                             
                             <h2 class="text-4xl font-bold text-gray-500 mb-3 pr-16">{{ $post->title }}</h2>
                             
                             <p class="text-gray-500 mb-4 leading-relaxed text-2xl">{{ $post->excerpt }}</p>
                             
-                            <a href="{{ route('posts.show', $post->slug) }}" class="inline-block mt-7 px-8 py-4 bg-orange-600 text-white hover:bg-orange-700 transition-colors">
+                            <a href="{{ route('posts.show', $post->slug) }}" class="font-bold inline-block mt-7 px-7 py-4 bg-orange-600 text-white hover:bg-orange-700 transition-colors">
                                 Read More →
                             </a>
                         </div>
