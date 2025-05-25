@@ -22,8 +22,8 @@
                 @foreach ($posts as $post)
                     <div class="flex bg-white shadow-lg mb-9 text-gray-500 overflow-hidden">
 
-                    <img src="{{ asset($post->image) }}" alt="{{ $post->title }}" class="w-1/3 object-cover">   
-                                        
+                    <img src="{{ asset(path: $post->image) }}" alt="{{ $post->title }}" class="w-1/3 object-cover">   
+
                         <div class="p-6 w-2/3 relative">
                             <div class="absolute top-4 right-4 flex gap-2">
                                 <a href="{{ route('posts.edit', $post) }}" class="text-gray-500  hover:text-orange-600">
