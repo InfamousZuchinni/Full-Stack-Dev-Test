@@ -16,7 +16,7 @@ class PostSeeder extends Seeder
                 'slug' => Str::slug('First Post'),
                 'excerpt' => 'This is the excerpt of the first post.',
                 'content' => 'This is the full content of the first post.',
-                'image' => 'sample-images/sample1.jpg', // image path relative to public/
+                'image' => 'sample-images/sample1.jpg', 
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
